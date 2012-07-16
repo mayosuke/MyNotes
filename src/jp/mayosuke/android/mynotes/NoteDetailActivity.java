@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class NoteDetailActivity extends Activity {
     private static final String TAG = NoteDetailActivity.class.getSimpleName();
@@ -72,6 +73,14 @@ public class NoteDetailActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.v(TAG, "onOptionsItemSelected():item=" + item);
+        switch (item.getItemId()) {
+        case R.id.menu_save_note:
+            Toast.makeText(this, "ノートを保存します。", Toast.LENGTH_SHORT).show();
+            break;
+        case R.id.menu_delete_note:
+            Toast.makeText(this, "ノートを削除します。", Toast.LENGTH_SHORT).show();
+            break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
