@@ -6,7 +6,7 @@
     <string name="menu_new_note">New note</string>
     <string name="menu_save_note">Save</string>
     <string name="menu_delete_note">Delete</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_note_list">Note List</string>
     <string name="title_activity_note_detail">Note Detail</string>
     <string name="hint_note_detail">Input note here.</string>
 

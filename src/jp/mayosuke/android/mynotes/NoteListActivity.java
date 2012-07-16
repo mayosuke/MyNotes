@@ -6,15 +6,17 @@ import android.app.ListFragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.TextUtils.TruncateAt;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
-public class MainActivity extends Activity {
-    private static final String TAG = MainActivity.class.getSimpleName();
+public class NoteListActivity extends Activity {
+    private static final String TAG = NoteListActivity.class.getSimpleName();
 
     private static final int REQUEST_CREATE_NEW_NOTE = 0;
 
@@ -103,29 +105,39 @@ public class MainActivity extends Activity {
     }
 
     private class MyListAdapter extends BaseAdapter {
+        private final Notes mNotes = Notes.getNotes();
 
         @Override
         public int getCount() {
-            // TODO Auto-generated method stub
-            return 0;
+            return mNotes.getNotesCount();
         }
 
         @Override
         public Object getItem(int position) {
-            // TODO Auto-generated method stub
-            return null;
+            return mNotes.getNote(position);
         }
 
         @Override
         public long getItemId(int position) {
-            // TODO Auto-generated method stub
-            return 0;
+            return mNotes.getNote(position).hashCode();
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            // TODO Auto-generated method stub
-            return null;
+            final View view;
+            if (convertView == null) {
+                view = View.inflate(NoteListActivity.this, android.R.layout.simple_list_item_1, null);
+                final TextView text = (TextView)view.findViewById(android.R.id.text1);
+                text.setSingleLine();
+                text.setEllipsize(TruncateAt.END);
+            } else {
+                view = convertView;
+            }
+
+            final TextView text = (TextView)view.findViewById(android.R.id.text1);
+            text.setText(mNotes.getNote(position));
+
+            return view;
         }
         
     }
