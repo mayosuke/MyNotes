@@ -20,15 +20,19 @@ public class NoteListActivity extends Activity {
 
     private static final int REQUEST_CREATE_NEW_NOTE = 0;
 
+    private ListFragment mListFragment;
+
     @TargetApi(11)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(TAG, "onCreate():savedInstanceState=" + savedInstanceState);
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
-        ListFragment listFragment = new ListFragment();
-        listFragment.setListAdapter(new MyListAdapter());
-        getFragmentManager().beginTransaction().add(android.R.id.content, listFragment).commit();
+        if (mListFragment == null) {
+            mListFragment = new ListFragment();
+        }
+        mListFragment.setListAdapter(new MyListAdapter());
+        getFragmentManager().beginTransaction().add(android.R.id.content, mListFragment).commit();
     }
 
     @Override
