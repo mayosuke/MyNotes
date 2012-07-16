@@ -26,6 +26,10 @@ public class NoteDetailActivity extends Activity {
         if (mContent == null) {
             throw new NullPointerException("You should provide EditText for this activity.");
         }
+        if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_STATE_CONTENT)) {
+            final CharSequence content = savedInstanceState.getCharSequence(INSTANCE_STATE_CONTENT);
+            mContent.setText(content);
+        }
     }
 
     @Override
