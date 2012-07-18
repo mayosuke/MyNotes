@@ -27,7 +27,7 @@ public class NoteListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(TAG, "onCreate():savedInstanceState=" + savedInstanceState);
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
+        mListFragment = (ListFragment) getFragmentManager().findFragmentById(android.R.id.content);
         if (mListFragment == null) {
             mListFragment = new ListFragment();
         }
