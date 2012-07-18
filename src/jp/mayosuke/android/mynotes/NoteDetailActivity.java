@@ -2,6 +2,7 @@ package jp.mayosuke.android.mynotes;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,13 +76,33 @@ public class NoteDetailActivity extends Activity {
         Log.v(TAG, "onOptionsItemSelected():item=" + item);
         switch (item.getItemId()) {
         case R.id.menu_save_note:
-            Toast.makeText(this, "ノートを保存します。", Toast.LENGTH_SHORT).show();
+            handleSaveNote();
             break;
         case R.id.menu_delete_note:
-            Toast.makeText(this, "ノートを削除します。", Toast.LENGTH_SHORT).show();
+            handleDeleteNote();
             break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        super.onBackPressed();
+    }
+
+    private void handleSaveNote() {
+        Toast.makeText(this, "ノートを保存します。", Toast.LENGTH_SHORT).show();
+        final Intent data = new Intent();
+        setResult(RESULT_OK, data);
+        finish();
+    }
+
+    private void handleDeleteNote() {
+        Toast.makeText(this, "ノートを削除します。", Toast.LENGTH_SHORT).show();
+        final Intent data = new Intent();
+        setResult(RESULT_OK, data);
+        finish();
     }
 
     @Override
