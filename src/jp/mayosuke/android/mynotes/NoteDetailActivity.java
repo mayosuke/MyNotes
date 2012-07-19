@@ -31,6 +31,11 @@ public class NoteDetailActivity extends Activity {
         if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_STATE_CONTENT)) {
             final CharSequence content = savedInstanceState.getCharSequence(INSTANCE_STATE_CONTENT);
             mContent.setText(content);
+        } else if (getIntent().hasExtra(Notes.EXTRA_NOTES_ID)) {
+            final int noteId = getIntent().getIntExtra(Notes.EXTRA_NOTES_ID, -1);
+            if (noteId != -1) {
+                mContent.setText(Notes.getNotes().getNote(noteId));
+            }
         }
     }
 

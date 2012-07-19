@@ -13,12 +13,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class NoteListActivity extends Activity {
     private static final String TAG = NoteListActivity.class.getSimpleName();
 
     private static final int REQUEST_CREATE_NEW_NOTE = 0;
+    public static final int REQUEST_EDIT_NOTE = 1;
 
     private ListFragment mListFragment;
 
@@ -29,7 +31,7 @@ public class NoteListActivity extends Activity {
         super.onCreate(savedInstanceState);
         mListFragment = (ListFragment) getFragmentManager().findFragmentById(android.R.id.content);
         if (mListFragment == null) {
-            mListFragment = new ListFragment();
+            mListFragment = new MyListFragment();
         }
         mListFragment.setListAdapter(new MyListAdapter());
         getFragmentManager().beginTransaction().add(android.R.id.content, mListFragment).commit();
@@ -143,6 +145,22 @@ public class NoteListActivity extends Activity {
 
             return view;
         }
+    }
+
+    @TargetApi(11)
+    private static class MyListFragment extends ListFragment {
         
+        @Override
+        public void onListItemClick(ListView l, View v, int position, long id) {
+            Log.v(TAG, "onListItemClick():position=" +position + ",id=" + id);
+            final Intent intent = new Intent(getActivity(), NoteDetailActivity.class);
+            intent.putExtra(Notes.EXTRA_NOTES_ID, position);
+            startActivityForResult(intent, REQUEST_EDIT_NOTE);
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            Log.v(TAG, "onActivityResult():requestCode=" + requestCode + ",resultCode=" + resultCode + ",data=" + data);
+        }
     }
 }
