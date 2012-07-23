@@ -5,6 +5,7 @@ import java.util.List;
 
 class Notes {
     public static final String EXTRA_NOTES_ID = "jp.mayosuke.android.mynotes.Notes.EXTRA_NOTES_ID";
+    public static final String EXTRA_NOTE_CONTENT = "jp.mayosuke.android.mynotes.Notes.EXTRA_NOTE_CONTENT";
 
     private static final Notes sNotes = new Notes();
 

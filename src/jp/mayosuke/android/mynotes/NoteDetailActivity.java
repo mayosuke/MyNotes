@@ -17,6 +17,7 @@ public class NoteDetailActivity extends Activity {
     private static final String INSTANCE_STATE_CONTENT = "jp.mayosuke.android.mynotes.NoteDetailActivity.mContent";
 
     private EditText mContent;
+    private int mNoteId = -1;
 
     @TargetApi(11)
     @Override
@@ -32,9 +33,9 @@ public class NoteDetailActivity extends Activity {
             final CharSequence content = savedInstanceState.getCharSequence(INSTANCE_STATE_CONTENT);
             mContent.setText(content);
         } else if (getIntent().hasExtra(Notes.EXTRA_NOTES_ID)) {
-            final int noteId = getIntent().getIntExtra(Notes.EXTRA_NOTES_ID, -1);
-            if (noteId != -1) {
-                mContent.setText(Notes.getNotes().getNote(noteId));
+            mNoteId = getIntent().getIntExtra(Notes.EXTRA_NOTES_ID, -1);
+            if (mNoteId != -1) {
+                mContent.setText(Notes.getNotes().getNote(mNoteId));
             }
         }
     }
@@ -92,22 +93,27 @@ public class NoteDetailActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        setResult(RESULT_CANCELED);
-        super.onBackPressed();
+        Log.v(TAG, "onBackPressed()");
+        handleSaveNote();
     }
 
     private void handleSaveNote() {
         Toast.makeText(this, "ノートを保存します。", Toast.LENGTH_SHORT).show();
-        final Intent data = new Intent();
-        setResult(RESULT_OK, data);
-        finish();
+        setResult(RESULT_OK, getData());
+        super.onBackPressed();
     }
 
     private void handleDeleteNote() {
         Toast.makeText(this, "ノートを削除します。", Toast.LENGTH_SHORT).show();
+        setResult(RESULT_CANCELED, getData());
+        super.onBackPressed();
+    }
+
+    private Intent getData() {
         final Intent data = new Intent();
-        setResult(RESULT_OK, data);
-        finish();
+        data.putExtra(Notes.EXTRA_NOTES_ID, mNoteId);
+        data.putExtra(Notes.EXTRA_NOTE_CONTENT, mContent.getText().toString());
+        return data;
     }
 
     @Override
