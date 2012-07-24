@@ -106,8 +106,12 @@ public class NoteListActivity extends Activity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         Log.v(TAG, "onActivityResult():requestCode=" + requestCode + ",resultCode=" + resultCode + ",data=" + data);
+        if (resultCode == RESULT_OK) {
+            BaseAdapter adapter = (BaseAdapter) mListFragment.getListAdapter();
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private class MyListAdapter extends BaseAdapter {

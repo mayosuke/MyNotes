@@ -96,6 +96,9 @@ public class NoteDetailActivity extends Activity {
         Log.v(TAG, "onBackPressed()");
         if (isNoteModified()) {
             handleSaveNote();
+        } else {
+            setResult(RESULT_CANCELED);
+            super.onBackPressed();
         }
     }
 
@@ -121,13 +124,19 @@ public class NoteDetailActivity extends Activity {
 
     private void handleSaveNote() {
         Toast.makeText(this, "ノートを保存します。", Toast.LENGTH_SHORT).show();
+        if (mNoteId == -1) {
+            Notes.getNotes().addNote(mContent.getText());
+        } else {
+            Notes.getNotes().replaceNote(mNoteId, mContent.getText());
+        }
         setResult(RESULT_OK, getData());
         super.onBackPressed();
     }
 
     private void handleDeleteNote() {
         Toast.makeText(this, "ノートを削除します。", Toast.LENGTH_SHORT).show();
-        setResult(RESULT_CANCELED, getData());
+        Notes.getNotes().replaceNote(mNoteId, mContent.getText());
+        setResult(RESULT_OK, getData());
         super.onBackPressed();
     }
 

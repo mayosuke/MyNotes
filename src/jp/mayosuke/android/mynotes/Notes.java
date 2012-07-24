@@ -42,4 +42,8 @@ class Notes {
     void clearNotes() {
         mContents.clear();
     }
+
+    void replaceNote(int position, CharSequence content) {
+        mContents.set(position, content);
+    }
 }
