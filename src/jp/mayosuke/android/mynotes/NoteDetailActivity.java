@@ -94,26 +94,9 @@ public class NoteDetailActivity extends Activity {
     @Override
     public void onBackPressed() {
         Log.v(TAG, "onBackPressed()");
-        handleSaveNote();
-    }
-
-    private void handleSaveNote() {
-        Toast.makeText(this, "ノートを保存します。", Toast.LENGTH_SHORT).show();
-        setResult(RESULT_OK, getData());
-        super.onBackPressed();
-    }
-
-    private void handleDeleteNote() {
-        Toast.makeText(this, "ノートを削除します。", Toast.LENGTH_SHORT).show();
-        setResult(RESULT_CANCELED, getData());
-        super.onBackPressed();
-    }
-
-    private Intent getData() {
-        final Intent data = new Intent();
-        data.putExtra(Notes.EXTRA_NOTES_ID, mNoteId);
-        data.putExtra(Notes.EXTRA_NOTE_CONTENT, mContent.getText().toString());
-        return data;
+        if (isNoteModified()) {
+            handleSaveNote();
+        }
     }
 
     @Override
@@ -136,4 +119,26 @@ public class NoteDetailActivity extends Activity {
         super.onRestoreInstanceState(savedInstanceState);
     }
 
+    private void handleSaveNote() {
+        Toast.makeText(this, "ノートを保存します。", Toast.LENGTH_SHORT).show();
+        setResult(RESULT_OK, getData());
+        super.onBackPressed();
+    }
+
+    private void handleDeleteNote() {
+        Toast.makeText(this, "ノートを削除します。", Toast.LENGTH_SHORT).show();
+        setResult(RESULT_CANCELED, getData());
+        super.onBackPressed();
+    }
+
+    private Intent getData() {
+        final Intent data = new Intent();
+        data.putExtra(Notes.EXTRA_NOTES_ID, mNoteId);
+        data.putExtra(Notes.EXTRA_NOTE_CONTENT, mContent.getText().toString());
+        return data;
+    }
+
+    private boolean isNoteModified() {
+        return true;
+    }
 }

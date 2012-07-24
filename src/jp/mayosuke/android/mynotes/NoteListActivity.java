@@ -148,8 +148,12 @@ public class NoteListActivity extends Activity {
     }
 
     @TargetApi(11)
-    private static class MyListFragment extends ListFragment {
-        
+    public static class MyListFragment extends ListFragment {
+
+        public MyListFragment() {
+            // Do nothing so far
+        }
+
         @Override
         public void onListItemClick(ListView l, View v, int position, long id) {
             Log.v(TAG, "onListItemClick():position=" +position + ",id=" + id);
